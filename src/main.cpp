@@ -1,28 +1,3 @@
-/*
-Raylib example file.
-This is an example main file for a simple raylib project.
-Use this as a starting point or replace it with your code.
-
-For a C++ project simply rename the file to .cpp and re-run the build script 
-
--- Copyright (c) 2020-2024 Jeffery Myers
---
---This software is provided "as-is", without any express or implied warranty. In no event 
---will the authors be held liable for any damages arising from the use of this software.
-
---Permission is granted to anyone to use this software for any purpose, including commercial 
---applications, and to alter it and redistribute it freely, subject to the following restrictions:
-
---  1. The origin of this software must not be misrepresented; you must not claim that you 
---  wrote the original software. If you use this software in a product, an acknowledgment 
---  in the product documentation would be appreciated but is not required.
---
---  2. Altered source versions must be plainly marked as such, and must not be misrepresented
---  as being the original software.
---
---  3. This notice may not be removed or altered from any source distribution.
-
-*/
 
 #include "raylib.h"
 #include<iostream>
@@ -83,8 +58,8 @@ class Ball{
 			}
 
 		}
-		friend void collisionPad(Ball ball,Paddle player);
-		friend void collisionCpu(Ball ball,cpuPaddle cpu);
+		//friend void collisionPad(Ball ball,Paddle player);Needs rewrite
+		//friend void collisionCpu(Ball ball,cpuPaddle cpu);Needs rewrtite
 };
 
 class Paddle{
@@ -120,7 +95,7 @@ class Paddle{
 			}
 			limitMovement();
 		}
-		friend void collisionPad(Ball ball,Paddle player);
+		//friend void collisionPad(Ball ball,Paddle player);
 };
 
 
@@ -175,7 +150,9 @@ void collisionCpu(Ball ball,cpuPaddle cpu){
 
 int main ()
 {	
-	bool check=true;
+	start:
+	bool score_check=true;
+	bool screen_check=true;
 	// Tell the window to use vysnc and work on high DPI displays
 	//SetConfigFlags(FLAG_VSYNC_HINT | FLAG_WINDOW_HIGHDPI);
 
@@ -194,6 +171,14 @@ int main ()
 	{	
 		// drawing
 		BeginDrawing();
+		ClearBackground(BLACK);
+		if(screen_check){
+			DrawText("Press Enter to start, Esc to exit",GetScreenWidth()/2,GetScreenHeight()/2,30,WHITE);
+			if(IsKeyPressed(KEY_ENTER)){
+				screen_check=false;
+			}
+		}
+		else{
 		ball.Update();
 		player.Update();
 		cpu.Update(ball.getBall_y());
@@ -223,18 +208,19 @@ int main ()
 		if(playerScore>=3){
 			DrawText(TextFormat("%i",playerScore),3*1280/4-20,20,80,WHITE);
 			DrawText("Player Wins",GetScreenWidth()/2,GetScreenHeight()/2,30,WHITE);
-			check=false;
+			score_check=false;
 		}
 		if(cpuScore>=3){
 			DrawText(TextFormat("%i",cpuScore),1280/4-20,20,80,WHITE);
 			DrawText("CPU Wins",GetScreenWidth()/2,GetScreenHeight()/2,30,WHITE);
-			check=false;
+			score_check=false;
+		}
 		}
 		// end the frame and get ready for the next one  (display frame, poll input, etc...)
 		EndDrawing();
-		if(!check){
+		if(!score_check){
 			WaitTime(3);
-			CloseWindow();
+			goto start;
 		}
 	}
 
