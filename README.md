@@ -1,3 +1,3 @@
 # pong
 
-A bisc pong game made in c++ using raylib
+A basic pong game made in c++ using raylib
