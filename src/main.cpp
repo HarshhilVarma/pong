@@ -150,14 +150,17 @@ void collisionCpu(Ball ball,cpuPaddle cpu){
 
 int main ()
 {	
+	InitWindow(1280, 800, "Pong");
 	start:
 	bool score_check=true;
 	bool screen_check=true;
+	playerScore=0;
+	cpuScore=0;
 	// Tell the window to use vysnc and work on high DPI displays
 	//SetConfigFlags(FLAG_VSYNC_HINT | FLAG_WINDOW_HIGHDPI);
 
 	// Create the window and OpenGL context
-	InitWindow(1280, 800, "Pong");
+
 
 	// Utility function from resource_dir.h to find the resources folder and set it as the current working directory so we can load from it
 	//SearchAndSetResourceDir("resources");
